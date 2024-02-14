@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Etsy Listing{% endblock %}
+{% block body %}
+
+    <h1>Etsy Listing</h1>
+    <div class="center-container">
+        <p>Get the top product from the etsy page</p><br>
+    </div>
+    
+    <div class="center-container">
+        <form method="post" action="{{ url_for('index') }}">
+            <label for="searchTerm">Enter your search product:</label>
+            <input type="text" name="searchTerm" required>
+            <button type="submit" onclick="startProgressBar()">Search</button>
+        </form>
+    </div>
+
+    {% if table %}
+    <div style="overflow-x: auto;">
+        <h2>Search Results</h2>
+        {{ table|safe }}
+        <form method="get" action="{{ url_for('download_csv', filename=filename) }}">
+            <button type="submit">Export as CSV</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% if filepath %}
+        <h2>Data has been saved to: {{ filepath }}</h2>
+        <a href="{{ url_for('download_csv', filename=filename) }}" download>Download CSV</a>
+    {% endif %}
+
+{% endblock %}
